@@ -1,8 +1,37 @@
-import { Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Param, Post, Query, Redirect, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
 
 @Controller('/api/users')
 export class UserController {
+
+    // HTTP Response menggunakan express.Response
+    // @Get('/sample-response')
+    // sampleResponse(@Res() response: Response) {
+    //     response.status(200).json({
+    //         data: 'Hello World'
+    //     }); 
+    // }
+
+    // HTTP Response menggunakan Response Decorator
+    @Get('/sample-response')
+    @Header('Content-Type', 'application/json')
+    @HttpCode(200)
+    sampleResponse(): Record<string, string> {
+        return {
+            data: 'Hello JSON'
+        } 
+    }
+
+    // HTTP Response menggunakan Response Decorator
+    @Get('/redirect')
+    @Redirect()
+    redirect(): HttpRedirectResponse {
+        return {
+            url: '/api/users/sample-response',
+            statusCode: 301
+        };
+    }
+
     @Post()
     createUser(): string {
         return 'POST User';
@@ -13,19 +42,19 @@ export class UserController {
         return 'GET User';
     } 
 
-    // Untuk express.Request
+    // HTTP Request Untuk express.Request
     // @Get('/sample/:id')
     // getUserById(@Req() request: Request): string {
     //     return `GET User ID: ${request.params.id}`;
     // }
 
-    // Untuk req.params.id?
+    // HTTP Request Untuk req.params.id?
     @Get('sample/:id')
     getUserById(@Param("id") id): string {
         return `GET ${id}`;
     }
 
-    // Untuk req.query.key?
+    // HTTP Request Untuk req.query.key?
     @Get('/hello')
     sayHello(
         @Query("first_name") first_name: string,
