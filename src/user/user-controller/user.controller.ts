@@ -2,23 +2,26 @@ import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Param, Post, Q
 import { Request, Response } from 'express';
 import { UserService } from '../user-service/user.service';
 import { Connection } from '../connection/connection';
+import { MailService } from '../mail/mail.service';
 
 @Controller('/api/users')
 export class UserController {
     constructor(
         private service: UserService,
-        private connection: Connection
+        private connection: Connection,
+        private mailService: MailService
     ) {}
 
     @Get('/connection')
     async getConnection(): Promise<string> {
+        this.mailService.send();
         return this.connection.getName();
     }
 
     // HTTP Request Untuk req.query.key?
     @Get('/hello')
     async sayHello(@Query('name') name: string): Promise<string> {
-        return `Hello ${name}`;
+        return this.service.sayHello(name);
     }
 
     @Get('/view/hello')
