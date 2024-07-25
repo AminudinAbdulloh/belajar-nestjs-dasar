@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import * as httpMock from 'node-mocks-http';
+import { UserService } from '../user-service/user.service';
 
 describe('UserController', () => {
   let controller: UserController;
@@ -9,15 +10,15 @@ describe('UserController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
       imports: [],
-      providers: []
+      providers: [UserService]
     }).compile();
 
     controller = module.get<UserController>(UserController);
   });
 
   it('should can say hello', async () => {
-    const response = await controller.sayHello('Aminudin', 'Abdulloh');
-    expect(response).toBe('Hello Aminudin Abdulloh');
+    const response = await controller.sayHello('Aminudin');
+    expect(response).toBe('Hello Aminudin');
   });
 
   // Menggunakan Mock Object untuk response yang menggunakan express.Response
