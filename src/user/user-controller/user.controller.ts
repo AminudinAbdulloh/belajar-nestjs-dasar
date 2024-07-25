@@ -1,10 +1,19 @@
 import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Param, Post, Query, Redirect, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from '../user-service/user.service';
+import { Connection } from '../connection/connection';
 
 @Controller('/api/users')
 export class UserController {
-    constructor(private service: UserService) {}
+    constructor(
+        private service: UserService,
+        private connection: Connection
+    ) {}
+
+    @Get('/connection')
+    async getConnection(): Promise<string> {
+        return this.connection.getName();
+    }
 
     // HTTP Request Untuk req.query.key?
     @Get('/hello')
