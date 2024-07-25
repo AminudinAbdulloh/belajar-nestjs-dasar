@@ -21,6 +21,10 @@ import { createUserRepository, UserRepository } from './user-repository/user-rep
         provide: UserRepository,
         useFactory: createUserRepository,
         inject: [Connection]
+    },
+    {
+        provide: 'EmailService',
+        useExisting: MailService
     }
   ]
 })

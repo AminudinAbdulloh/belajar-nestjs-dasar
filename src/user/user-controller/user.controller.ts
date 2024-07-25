@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Param, Post, Query, Redirect, Req, Res } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Inject, Param, Post, Query, Redirect, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from '../user-service/user.service';
 import { Connection } from '../connection/connection';
@@ -11,11 +11,13 @@ export class UserController {
         private service: UserService,
         private connection: Connection,
         private mailService: MailService,
-        private userRepository: UserRepository
+        private userRepository: UserRepository,
+        @Inject('EmailService') private emailService: MailService
     ) {}
 
     @Get('/connection')
     async getConnection(): Promise<string> {
+        this.emailService.send();
         this.userRepository.save();
         this.mailService.send();
         return this.connection.getName();
