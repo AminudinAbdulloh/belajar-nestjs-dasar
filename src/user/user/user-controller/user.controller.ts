@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, HttpException, HttpRedirectResponse, Inject, Param, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, HttpException, HttpRedirectResponse, Inject, Param, ParseIntPipe, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from '../user-service/user.service';
 import { Connection } from '../../connection/connection';
@@ -117,7 +117,7 @@ export class UserController {
 
     // HTTP Request Untuk req.params.id?
     @Get('sample/:id')
-    getUserById(@Param("id") id): string {
+    getUserById(@Param("id", ParseIntPipe) id: number): string {
         return `GET ${id}`;
     }
 }
