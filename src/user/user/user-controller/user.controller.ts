@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Inject, Param, Post, Query, Redirect, Req, Res } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Inject, Param, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from '../user-service/user.service';
 import { Connection } from '../../connection/connection';
@@ -6,6 +6,7 @@ import { MailService } from '../../mail/mail.service';
 import { UserRepository } from '../../user-repository/user-repository';
 import { MemberService } from 'src/user/member/member.service';
 import { User } from '@prisma/client';
+import { ValidationFilter } from 'src/validation/validation.filter';
 
 @Controller('/api/users')
 export class UserController {
@@ -39,6 +40,7 @@ export class UserController {
 
     // HTTP Request Untuk req.query.key?
     @Get('/hello')
+    @UseFilters(ValidationFilter)
     async sayHello(@Query('name') name: string): Promise<string> {
         return this.service.sayHello(name);
     }
