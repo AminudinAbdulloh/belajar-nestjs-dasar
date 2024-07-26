@@ -6,6 +6,6 @@ export class LoginUserRequest {
 }
 
 export const loginUserRequestValidation = z.object({
-    username: z.string().max(50).min(100),
+    username: z.string().max(50).min(1),
     password: z.string().max(50).min(1)
 });
