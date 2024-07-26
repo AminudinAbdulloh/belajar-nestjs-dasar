@@ -9,15 +9,19 @@ import * as winston from 'winston';
 
 @Module({
   imports: [
+    // <--- Dynamic Module --->
     WinstonModule.forRoot({
       format: winston.format.json(),
       level: 'debug',
       transports: [new winston.transports.Console()],
     }),
+    // <--- --->
     UserModule,
+    // <--- Dynamic Module --->
     ConfigModule.forRoot({
       isGlobal: true
     }),
+    // <--- --->
     PrismaModule,
   ],
   controllers: [AppController],
