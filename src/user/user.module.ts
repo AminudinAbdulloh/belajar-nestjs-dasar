@@ -7,10 +7,9 @@ import { UserRepository } from './user-repository/user-repository';
 import { MemberService } from './member/member.service';
 import { createConnection } from './connection/connection';
 import { ConfigService } from '@nestjs/config';
-import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [],
   controllers: [UserController],
   providers: [
     UserService,
