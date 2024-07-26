@@ -46,7 +46,7 @@ export class UserController {
 
     // HTTP Request Untuk req.query.key?
     @Get('/hello')
-    @UseFilters(ValidationFilter)
+    // @UseFilters(ValidationFilter)
     async sayHello(@Query('name') name: string): Promise<string> {
         return this.service.sayHello(name);
     }
