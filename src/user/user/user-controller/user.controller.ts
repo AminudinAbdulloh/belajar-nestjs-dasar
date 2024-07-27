@@ -26,7 +26,6 @@ export class UserController {
     ) {}
 
     @Get('/current')
-    @UseGuards(RoleGuard)
     @Roles(['Admin', 'Operator'])
     current(@Auth() user: User): Record<string, any> {
         return {
