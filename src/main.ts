@@ -20,6 +20,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(new ValidationFilter);
   // app.useGlobalInterceptors(...)
+  // app.useGlobalGuards(...)
 
   const configService = app.get(ConfigService);
 
